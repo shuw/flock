@@ -1,0 +1,14 @@
+{
+  "name": "flock",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "2.5.x",
+    "coffee-script": "1.2.X",
+    "connect": "1.8.X",
+    "connect-assets": "2.2.X",
+    "jade": "0.20.X"
+  },
+  "engines": {
+    "node": "0.6.x"
+  }
+}
