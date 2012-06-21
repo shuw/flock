@@ -24,7 +24,7 @@ class Boid
     # Draw a triangle rotated in the direction of velocity
     theta = @velocity.heading() + @p.radians(90)
     @p.fill(70)
-    @p.stroke(255,255,0)
+    @p.stroke(255,255,255)
     @p.pushMatrix()
     @p.translate(@location.x,@location.y)
     @p.rotate(theta)
@@ -153,7 +153,7 @@ flock = (processing) ->
   # Instantiate 100 boids who start in the middle of the map, have a maxmimum 
   # speed of 2, maximum force of 0.05, and give them a reference to the 
   # processing instance so they can render themselves.
-  boids = for i in [0..100]
+  boids = for i in [0..300]
     new Boid(start, processing)
 
   processing.draw = ->
