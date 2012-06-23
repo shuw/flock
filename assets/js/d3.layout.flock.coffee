@@ -1,7 +1,9 @@
-#= require vector.coffee
+# This code here is forked from:
+#   http://harry.me/2011/02/17/neat-algorithms---flocking
+# which is a Processing-based implementation of the Boids algorithm by Craig Reynolds
+#   http://www.red3d.com/cwr/boids/
 
-# Ported almost directly from http://processingjs.org/learning/topic/flocking
-# thanks a whole lot to Craig Reynolds and Daniel Shiffman
+#= require vector.coffee
 
 NEIGHBOUR_RADIUS = 50
 DESIRED_SEPARATION = 6
