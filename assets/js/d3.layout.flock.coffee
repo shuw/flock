@@ -5,18 +5,19 @@
 
 #= require vector.coffee
 
-NEIGHBOUR_RADIUS = 50
-DESIRED_SEPARATION = 6
-SEPARATION_WEIGHT = 2
-ALIGNMENT_WEIGHT = 1
-COHESION_WEIGHT = 1
-MAX_FORCE = 0.05
-MAX_SPEED = 2
-
 class Flock
 
-  constructor: ->
-    @_size = [256, 256]
+  constructor: (options = {}) ->
+    @_options = options
+    @_options.neighbour_radius ||= 50
+    @_options.desired_seperation ||= 16
+    @_options.seperation_weight ||= 2
+    @_options.alignment_weight ||= 1
+    @_options.cohesion_weight ||= 1
+    @_options.max_force ||= 0.05
+    @_options.max_speed ||= 2
+
+    @_size = [256, 256]  # default size
     @_event = d3.dispatch 'tick'
     @_boids = []
     @r(2)
@@ -37,13 +38,13 @@ class Flock
     @
 
   # nodes
-  nodes: (x, options={}) ->
+  nodes: (x) ->
     return @_boids unless arguments.length
     @_boids = x
     # center position and random velocity unless otherwise specified
     for b in @_boids
       if !b.location
-        if options.random_starting_locations
+        if @_options.random_starting_locations
           b.location = new Vector @_size[0] * Math.random(), @_size[1] * Math.random()
         else
           b.location = new Vector @_size[0] / 2, @_size[1] / 2
@@ -79,16 +80,16 @@ class Flock
   _update: (neighbours) ->
     for b in @_boids
       acceleration = @_flock(b, neighbours)
-      b.velocity.add(acceleration).limit(MAX_SPEED) # Limit the maximum speed at which a boid can go
+      b.velocity.add(acceleration).limit(@_options.max_speed) # Limit the maximum speed at which a boid can go
       b.location.add(b.velocity)
       @_wrapIfNeeded(b)
 
   # Implements the flocking algorthim by collecting the three components
   # and returning a weighted sum.
   _flock: (b, neighbours) ->
-    separation = @_separate(b, neighbours).multiply(SEPARATION_WEIGHT)
-    alignment = @_align(b, neighbours).multiply(ALIGNMENT_WEIGHT)
-    cohesion = @_cohere(b, neighbours).multiply(COHESION_WEIGHT)
+    separation = @_separate(b, neighbours).multiply(@_options.seperation_weight)
+    alignment = @_align(b, neighbours).multiply(@_options.alignment_weight)
+    cohesion = @_cohere(b, neighbours).multiply(@_options.cohesion_weight)
     return separation.add(alignment).add(cohesion)
 
   # Separation component for the frame's acceleration
@@ -97,7 +98,7 @@ class Flock
     count = 0
     for boid in neighbours
       d = b.location.distance(boid.location)
-      if d > 0 and d < DESIRED_SEPARATION
+      if d > 0 and d < @_options.desired_seperation
         # Normalized, weighted by distance vector pointing away from the neighbour
         mean.add Vector.subtract(b.location,boid.location).normalize().divide(d)
         count++
@@ -111,12 +112,12 @@ class Flock
     count = 0
     for boid in neighbours
       d = b.location.distance(boid.location)
-      if d > 0 and d < NEIGHBOUR_RADIUS
+      if d > 0 and d < @_options.neighbour_radius
         mean.add(boid.velocity)
         count++
 
     mean.divide(count) if count > 0
-    mean.limit(MAX_FORCE)
+    mean.limit(@_options.max_force)
     return mean
 
   # Called to get the cohesion component of the acceleration
@@ -125,7 +126,7 @@ class Flock
     count = 0
     for boid in neighbours
       d = b.location.distance(boid.location)
-      if d > 0 and d < NEIGHBOUR_RADIUS
+      if d > 0 and d < @_options.neighbour_radius
         sum.add(boid.location)
         count++
 
@@ -144,13 +145,13 @@ class Flock
 
       # Two options for desired vector magnitude (1 -- based on distance, 2 -- maxspeed)
       if d < 100.0
-        desired.multiply(MAX_SPEED*(d/100.0)) # This damping is somewhat arbitrary
+        desired.multiply(@_options.max_speed*(d/100.0)) # This damping is somewhat arbitrary
       else
-        desired.multiply(MAX_SPEED)
+        desired.multiply(@_options.max_speed)
 
       # Steering = Desired minus Velocity
       steer = desired.subtract(b.velocity)
-      steer.limit(MAX_FORCE)  # Limit to maximum steering force
+      steer.limit(@_options.max_force)  # Limit to maximum steering force
     else
       steer = new Vector(0,0)
 
