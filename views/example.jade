@@ -17,6 +17,7 @@ html(lang="en")
     |     for (var i = 0; i < 100; i++) {
     |       boids.push({})
     |     }
+    | 
     |     root = d3.select('#root')
     |     sprites = root.selectAll('circle').data(boids)
     |     sprites.enter()
@@ -24,13 +25,15 @@ html(lang="en")
     |         .classed('boid', true)
     |         .attr('r', 2)
     |         .attr('fill', function(d, i) { return COLOR(i) })
-    |     boids.push({im_a_mouse: true})
+    | 
+    |     boids.push({im_a_mouse: true}) // Let's make the mouse a boid
     |     layout = d3.layout.flock()
     |       .size([window.innerWidth, window.innerHeight])
     |       .nodes(boids)
     |     window.onresize = function() {
     |       layout.size([window.innerWidth, window.innerHeight])
     |     }
+    | 
     |     layout.start().on('tick', function() {
     |       sprites.attr('points', function(d) {
     |         x = d.location.x
@@ -43,6 +46,7 @@ html(lang="en")
     |         return x + ',' + y + ' ' + x1 + ',' + y1 + ' ' + x2 + ',' + y2
     |       })
     |     })
+    | 
     |     window.onmousemove = function(e) {
     |       boids[100].location.x = e.x
     |       boids[100].location.y = e.y
