@@ -5,13 +5,11 @@ BOID_SIZE = 12
 COLOR = d3.scale.category10()
 TAIL_WIDTH_RADIANS = Math.PI / 10
 
-# Instantiate 100 boids who start in the middle of the map, have a maxmimum
-# speed of 2, maximum force of 0.05, and give them a reference to the
-# processing instance so they can render themselves.
-boids = ({} for i in [0..100])
-
 
 window.start_flock = ->
+  # Just instantiate 100 empty boids
+  boids = ({} for i in [0..100])
+
   layout = d3.layout.flock()
     .size([window.innerWidth, window.innerHeight])
     .nodes(boids)
