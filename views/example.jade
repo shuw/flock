@@ -1,0 +1,45 @@
+!!! 5
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    title Flock
+    != css('example')
+  body
+    svg#root
+    != js('all')
+    // Example
+    | <script>
+    |     BOID_SIZE = 12
+    |     COLOR = d3.scale.category10()
+    |     TAIL_WIDTH_RADIANS = Math.PI / 10
+    |     // Just instantiate 100 empty boids
+    |     boids = []
+    |     for (var i = 0; i < 100; i++) {
+    |       boids.push({})
+    |     }
+    |     layout = d3.layout.flock()
+    |       .size([window.innerWidth, window.innerHeight])
+    |       .nodes(boids)
+    |     window.onresize = function() {
+    |       layout.size([window.innerWidth, window.innerHeight])
+    |     }
+    |     root = d3.select('#root')
+    |     sprites = root.selectAll('circle').data(boids)
+    |     sprites.enter()
+    |       .append('svg:polygon')
+    |         .classed('boid', true)
+    |         .attr('r', 2)
+    |         .attr('fill', function(d, i) { return COLOR(i) })
+    |     layout.start().on('tick', function() {
+    |       sprites.attr('points', function(d) {
+    |         x = d.location.x
+    |         y = d.location.y
+    |         angle = Math.atan2(d.velocity.y, d.velocity.x) - Math.PI
+    |         x1 = x + Math.cos(angle - TAIL_WIDTH_RADIANS) * BOID_SIZE
+    |         y1 = y + Math.sin(angle - TAIL_WIDTH_RADIANS) * BOID_SIZE
+    |         x2 = x + Math.cos(angle + TAIL_WIDTH_RADIANS) * BOID_SIZE
+    |         y2 = y + Math.sin(angle + TAIL_WIDTH_RADIANS) * BOID_SIZE
+    |         return x + ',' + y + ' ' + x1 + ',' + y1 + ' ' + x2 + ',' + y2
+    |       })
+    |     })
+    | </script>

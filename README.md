@@ -1,7 +1,8 @@
 ## Introduction
+
 A re-usable D3 [flocking](http://www.red3d.com/cwr/boids/) layout based on [a Processing implementation by Harry](http://harry.me/2011/02/17/neat-algorithms---flocking).
 
-## Example
+## Example Usage
 
     boids = ({} for i in [0..100])
 
