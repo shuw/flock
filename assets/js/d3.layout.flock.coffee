@@ -37,12 +37,17 @@ class Flock
     @
 
   # nodes
-  nodes: (x) ->
+  nodes: (x, options={}) ->
     return @_boids unless arguments.length
     @_boids = x
     # center position and random velocity unless otherwise specified
     for b in @_boids
-      b.location ||= new Vector @_size[0] / 2, @_size[1] / 2
+      if !b.location
+        if options.random_starting_locations
+          b.location = new Vector @_size[0] * Math.random(), @_size[1] * Math.random()
+        else
+          b.location = new Vector @_size[0] / 2, @_size[1] / 2
+
       b.velocity = new Vector(Math.random()*2-1,Math.random()*2-1)
     @
 

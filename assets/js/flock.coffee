@@ -3,7 +3,7 @@
 
 WIDTH = window.innerWidth
 HEIGHT = window.innerHeight
-
+BOID_SIZE = 8
 
 # Instantiate 100 boids who start in the middle of the map, have a maxmimum
 # speed of 2, maximum force of 0.05, and give them a reference to the
@@ -20,12 +20,20 @@ root = d3.select('#root')
 
 sprites = root.selectAll('circle').data(boids)
 sprites.enter()
-  .append('svg:circle')
+  .append('svg:polygon')
     .classed('boid', true)
     .attr('r', 2)
-    .attr('cx', 100)
-    .attr('cy', 100)
 
+
+TAIL_WIDTH_RADIANS = Math.PI / 10
 layout.start().on 'tick', ->
-  sprites.attr('cx', (d) -> d.location.x)
-  sprites.attr('cy', (d) -> d.location.y)
+  sprites.attr('points', (d) ->
+    x = d.location.x
+    y = d.location.y
+    angle = Math.atan2(d.velocity.y, d.velocity.x) - Math.PI
+    x1 = x + Math.cos(angle - TAIL_WIDTH_RADIANS) * BOID_SIZE
+    y1 = y + Math.sin(angle - TAIL_WIDTH_RADIANS) * BOID_SIZE
+    x2 = x + Math.cos(angle + TAIL_WIDTH_RADIANS) * BOID_SIZE
+    y2 = y + Math.sin(angle + TAIL_WIDTH_RADIANS) * BOID_SIZE
+    "#{x},#{y} #{x1},#{y1} #{x2},#{y2}"
+  )
