@@ -1,17 +1,18 @@
 COLOR = d3.scale.category10()
 
 # Just instantiate 100 empty boids
-boids = boids = ({} for i in [0..100])
+boids = boids = ({weight: Math.pow(Math.random() * 0.6, 2) + 0.8} for i in [0..100])
 
+debugger
 sprites = d3.select('#root').selectAll('circle').data(boids)
 sprites.enter()
   .append('svg:polygon')
     .classed('boid', true)
     .attr('r', 2)
     .attr('fill', (d, i) -> COLOR(i) )
-    .attr('points', (d) -> "0,0 -12,4 -12,-4")
+    .attr('points', (d) -> "0,0 -#{12 * d.weight},#{4 * d.weight} -#{12 * d.weight},-#{4 * d.weight}")
 
-boids.push({im_a_mouse: true}) # Let's make the mouse a boid
+boids.push im_a_mouse: true, weight: 10 # Let's make the mouse a boid
 
 layout = d3.layout.flock()
   .size([window.innerWidth, window.innerHeight])

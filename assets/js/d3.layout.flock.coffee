@@ -43,12 +43,8 @@ class Flock
     @_boids = x
     # center position and random velocity unless otherwise specified
     for b in @_boids
-      if !b.location
-        if @_options.random_starting_locations
-          b.location = new Vector @_size[0] * Math.random(), @_size[1] * Math.random()
-        else
-          b.location = new Vector @_size[0] / 2, @_size[1] / 2
-
+      b.location ||= new Vector 0, 0
+      b.weight ||= 1.0
       b.velocity = new Vector(Math.random()*2-1,Math.random()*2-1)
     @
 
@@ -98,7 +94,7 @@ class Flock
     count = 0
     for boid in neighbours
       d = b.location.distance(boid.location)
-      if d > 0 and d < @_options.desired_seperation
+      if d > 0 and d < @_options.desired_seperation * boid.weight
         # Normalized, weighted by distance vector pointing away from the neighbour
         mean.add Vector.subtract(b.location,boid.location).normalize().divide(d)
         count++
@@ -112,7 +108,7 @@ class Flock
     count = 0
     for boid in neighbours
       d = b.location.distance(boid.location)
-      if d > 0 and d < @_options.neighbour_radius
+      if d > 0 and d < @_options.neighbour_radius * boid.weight
         mean.add(boid.velocity)
         count++
 
@@ -126,7 +122,7 @@ class Flock
     count = 0
     for boid in neighbours
       d = b.location.distance(boid.location)
-      if d > 0 and d < @_options.neighbour_radius
+      if d > 0 and d < @_options.neighbour_radius * boid.weight
         sum.add(boid.location)
         count++
 
