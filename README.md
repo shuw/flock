@@ -2,12 +2,12 @@
 
 A re-usable D3 [flocking](http://www.red3d.com/cwr/boids/) layout inspied by [this Processing tutorial by Harry](http://harry.me/2011/02/17/neat-algorithms---flocking).
 
-* [Example usage](https://github.com/shuw/flock/blob/master/assets/js/example.coffee)
-* [Live example](http://shuw.github.com/)
-* [Video](http://www.youtube.com/watch?v=XghaIxp7jIw&list=PLGpGSlNcc5S8wcJ73ZHJ_glxazNpR8LDa)
+* [Example](https://github.com/shuw/flock/blob/master/assets/js/example.coffee)
+* [Demo](http://shuw.github.com/)
+* [Video](http://www.youtube.com/v/XghaIxp7jIw&list?autoplay=1)
 
 
-## Build the assets and run example
+## Build the assets and load example
 
     npm install
     node app.js
