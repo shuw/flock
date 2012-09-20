@@ -3,7 +3,7 @@ COLOR = d3.scale.category10()
 # Just instantiate 100 empty boids with random weights
 boids = boids = ({weight: Math.pow(Math.random() * 0.6, 2) + 0.8} for i in [0..100])
 
-sprites = d3.select('#root').selectAll('circle').data(boids)
+sprites = d3.select('#root').selectAll('.boid').data(boids)
 sprites.enter()
   .append('svg:polygon')
     .classed('boid', true)
