@@ -8,7 +8,7 @@ A re-usable D3 [flocking](http://www.red3d.com/cwr/boids/) layout based on [this
 
 ## Usage
 
-Include [flock.min.js](https://github.com/shuw/flock/blob/master/flock.min.js) on your page and follow [this CoffeeScript example](https://github.com/shuw/flock/blob/master/assets/js/example.coffee).
+Include [flock.min.js](https://raw.github.com/shuw/flock/master/flock.min.js) on your page and follow [this CoffeeScript example](https://github.com/shuw/flock/blob/master/assets/js/example.coffee) or not.
 
 
 ## Build and run the example locally
