@@ -75,10 +75,11 @@ class Flock
 
   _update: (neighbours) ->
     for b in @_boids
-      acceleration = @_flock(b, neighbours)
-      b.velocity.add(acceleration).limit(@_options.max_speed) # Limit the maximum speed at which a boid can go
-      b.location.add(b.velocity)
-      @_wrapIfNeeded(b)
+      unless b.stopped
+        acceleration = @_flock(b, neighbours)
+        b.velocity.add(acceleration).limit(@_options.max_speed) # Limit the maximum speed at which a boid can go
+        b.location.add(b.velocity)
+        @_wrapIfNeeded(b)
 
   # Implements the flocking algorthim by collecting the three components
   # and returning a weighted sum.
@@ -166,4 +167,4 @@ class Flock
     if b.location.y > @_wrap_borders.south
       return b.location.y = @_wrap_borders.north
 
-d3.layout.flock = -> new Flock()
+d3.layout.flock = (options) -> new Flock(options)
