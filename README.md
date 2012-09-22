@@ -6,6 +6,10 @@ A re-usable D3 [flocking](http://www.red3d.com/cwr/boids/) layout based on [this
 * [Demo](http://shuw.github.com/)
 * [Video](http://www.youtube.com/v/XghaIxp7jIw&list?autoplay=1)
 
+## Usage
+
+Include [flock.min.js](https://github.com/shuw/flock/blob/master/flock.min.js) on your page and follow [this example](https://github.com/shuw/flock/blob/master/assets/js/example.coffee).
+
 
 ## Build the assets and load example
 
