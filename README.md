@@ -1,6 +1,6 @@
 ## Introduction
 
-A re-usable D3 [flocking](http://www.red3d.com/cwr/boids/) layout inspied by [this Processing tutorial by Harry](http://harry.me/2011/02/17/neat-algorithms---flocking).
+A re-usable D3 [flocking](http://www.red3d.com/cwr/boids/) layout based on [this Processing tutorial by Harry](http://harry.me/2011/02/17/neat-algorithms---flocking).
 
 * [Example](https://github.com/shuw/flock/blob/master/assets/js/example.coffee)
 * [Demo](http://shuw.github.com/)

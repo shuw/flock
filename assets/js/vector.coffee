@@ -1,3 +1,5 @@
+# Ported to CoffeeScript from [this Processing version](http://harry.me/2011/02/17/neat-algorithms---flocking)
+
 class window.Vector
   # Class methods for nondestructively operating
   for name in ['add', 'subtract', 'multiply', 'divide']
@@ -15,14 +17,14 @@ class window.Vector
     Math.sqrt(@x*@x + @y*@y + @z*@z)
 
   normalize: ->
-    m = this.magnitude()
-    this.divide(m) if m > 0
+    m = @magnitude()
+    @divide(m) if m > 0
     return this
 
   limit: (max) ->
-    if this.magnitude() > max
-      this.normalize()
-      return this.multiply(max)
+    if @magnitude() > max
+      @normalize()
+      return @multiply(max)
     else
       return this
 
@@ -72,12 +74,12 @@ class window.Vector
 
   # Not the strict projection, the other isn't converted to a unit vector first.
   projectOnto: (other) ->
-    other.copy().multiply(this.dot(other))
+    other.copy().multiply(@dot(other))
 
   # Called on a vector acting as a position vector to return the wrapped representation closest
   # to another location
   wrapRelativeTo: (location, dimensions) ->
-    v = this.copy()
+    v = @copy()
     for a,key of {x:"width", y:"height"}
       d = this[a]-location[a]
       map_d = dimensions[key]
